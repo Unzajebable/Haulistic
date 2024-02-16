@@ -1,0 +1,9 @@
+{% extends 'haulistic/base.html' %}
+{% block content %}
+    <ul>
+        {% for list in lists %}
+            <li><a href='/list/{{list.pk}}'>{{list.list_name}}</a> &nbsp; {{list.list_category}}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
