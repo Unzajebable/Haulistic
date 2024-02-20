@@ -1,48 +1,39 @@
-"""
-URL configuration for haulapp project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from haulistic.views import (
     IndexView,
     LoginView,
+    LogoutView,
     AddUserView,
     UserListView,
-    AllListsView,
-    AddListView,
-    AddListElementView,
-    DetailListView,
+    AllShoppingListsView,
+    AddShoppingListElementView,
+    AddShoppingListView,
+    DetailShoppingListView,
+    AddToDoListView,
+    AddToDoElementView,
+    AllToDoListsView,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),   #landing page
-    path('user/login/', LoginView.as_view(), name='login'),
     path('user/add/', AddUserView.as_view(), name='add-user'),
+    path('user/login/', LoginView.as_view(), name='login'),
+    path('user/logout/', LogoutView.as_view(), name='logout'),
+    # path('user/edit/', EditUserView.as_view(), name='edit-user'),  #do zrobienie
     path('user/show-all/', UserListView.as_view(), name='show-all-users'),
-    path('list/all/', AllListsView.as_view(), name='all-lists'),
-    path('list/add/', AddListView.as_view(), name='list-add'),
-    path('list/<int:pk>/', DetailListView.as_view(), name='list-details'),
-    path('list/<int:pk>/add-item/', AddListElementView.as_view(), name='add-item-to-list'),
+    path('list/shop/all/', AllShoppingListsView.as_view(), name='all-shopping-lists'),
+    path('list/shop/add/', AddShoppingListView.as_view(), name='shopping-list-add'),
+    path('list/shop/<int:list_pk>/', DetailShoppingListView.as_view(), name='shopping-list-details'),
+    path('list/shop/<int:list_pk>/add-item/', AddShoppingListElementView.as_view(), name='add-item-to-shopping-list'),
+    # path('list/shop/<int:list_pk>/add-item/', AddToDefaultShoppingListElementView.as_view(), name='add-item-to-default-shopping-list'),  #do zrobienie
+    path('list/to-do/all/', AllToDoListsView.as_view(), name='all-to-do-lists'),
+    path('list/to-do/add/', AddToDoListView.as_view(), name='to-do-list-add'),
+    # path('list/to-do/<int:list_pk>/', DetailToDoListView.as_view(), name='to-do-list-details'),  #do zrobienie
+    path('list/to-do/<int:list_pk>/add-item/', AddToDoElementView.as_view(), name='add-item-to-to-do-list'),
+    # path('list/to-do/<int:list_pk>/add-item/', AddDefaultToDoElementView.as_view(), name='add-item-to-default-to-do-list'),  #do zrobienie
     
-    # dashboard aka main app page
-    # add new shopping list
-    # show all shopping lists
-    # detailed view of selected shopping list
-    # add an item to selected list
-    # add an to default list
+    # dashboard aka main app page pokazujący obie default listy
 ]
 

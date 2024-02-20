@@ -7,21 +7,27 @@
 </head>
 
 <body>
-	<header>
-		<img src="{% static 'logo.png' %}" alt="haulistic logo">
+	<header class="hbar">
+		<a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt="HAULISTic logo"></a>
 		<!--[przycisk do strony z logowaniem] -->
+		<a href="{% url 'login' %}" class="nav-link"><span>Log-in</span></a>
 	</header>
-	<div>
-		<img src="{% static 'dashboard_0.jpg' %}" alt="dashboard screenshot">
-	</div>
-	<div>
-		<p>Vestibulum eu felis risus. Donec pretium erat neque, id convallis risus facilisis nec. Nulla volutpat turpis mi, eu venenatis lacus pretium ac. Nam sit amet auctor libero. In tincidunt nec turpis in tempor. Proin sit amet libero a dolor porttitor gravida malesuada a augue. Proin vel dapibus arcu. Morbi lorem neque, bibendum feugiat elit vitae, euismod ornare ex. Cras faucibus urna ac diam suscipit, nec rutrum ante fermentum. Morbi eleifend vitae magna eget hendrerit. Mauris ut mi pretium enim iaculis condimentum ut non velit. Ut magna purus, vestibulum eu orci at, gravida suscipit est. Quisque at mollis purus, ut egestas ex. Mauris varius malesuada fermentum. Nulla in iaculis mi, euismod sodales sem.</p>
-		<!--	objaśnienie po krótce czym jest program	-->
-	</div>
-	<div>
-		<!--		karuzela screenów -->
-	</div>
-	{% block content %} {% endblock %}
+	<section class="top-half">
+		<div>
+			<img src="{% static 'dashboard_0.jpg' %}" alt="dashboard screenshot">
+		</div>
+		<div>
+			<p>Vestibulum eu felis risus. Donec pretium erat neque, id convallis risus facilisis nec. Nulla volutpat turpis mi, eu venenatis lacus pretium ac. Nam sit amet auctor libero. In tincidunt nec turpis in tempor. Proin sit amet libero a dolor porttitor gravida malesuada a augue. Proin vel dapibus arcu. Morbi lorem neque, bibendum feugiat elit vitae, euismod ornare ex. Cras faucibus urna ac diam suscipit, nec rutrum ante fermentum. Morbi eleifend vitae magna eget hendrerit. Mauris ut mi pretium enim iaculis condimentum ut non velit. Ut magna purus, vestibulum eu orci at, gravida suscipit est. Quisque at mollis purus, ut egestas ex. Mauris varius malesuada fermentum. Nulla in iaculis mi, euismod sodales sem.</p>
+			<!--	objaśnienie po krótce czym jest program	-->
+		</div>
+	</section>
+	<section class="bottom-half">
+		<div>
+			<img src="{{pfpurl}}">
+			<!--		karuzela screenów -->
+		</div>
+	</section>
+	<!--	{% block content %} {% endblock %}	prawdopodobnie niepotrzebne -->
 	<footer>
 		<center>
 			<h6>Created by Maciej Jankowski. &copy; {{now}}</h6>

@@ -1,12 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <img src="{% static 'logo.png' %}" alt="haulistic logo">
-        {% block content %} {% endblock %}
 
-    </body>
+<head>
+	<meta charset="utf-8">
+</head>
+
+<body>
+	<header class="hbar">
+		<a href="{% url 'dashboard' %}"><img src="{% static 'logo.png' %}" alt="HAULISTic logo"></a>
+		<!--[przycisk do strony z logowaniem] -->
+		<a href="{% url 'edit-user' %}" class="nav-link"><span>Edit Account</span></a>
+		<a href="{% url 'logout' %}" class="nav-link"><span>Log-out</span></a>
+	</header>
+	<section class="side-pannel">
+		<div class="side-group">
+			<h2>Shopping lists:</h2>
+			<a href="{% url 'all-shopping-lists' %}" class="side-nav"><span>All Shopping Lists</span></a>
+			<a href="{% url 'shopping-list-add' %}" class="side-nav"><span>Add New Shopping List</span></a>
+			<a href="{% url '' %}" class="side-nav"><span>Add An Item To Default List</span></a>
+		</div>
+		<div class="side-group">
+			<h2>To-Do lists:</h2>
+			<a href="{% url 'all-to-do-lists' %}" class="side-nav"><span>All To-Do Lists</span></a>
+			<a href="{% url 'to-do-list-add' %}" class="side-nav"><span>Add New To-Do List</span></a>
+			<a href="{% url '' %}" class="side-nav"><span>Add A Task To Default List</span></a>
+		</div>
+	</section>
+	<section class="canvas">
+		{% block content %} {% endblock %}
+	</section>
+	<footer>
+		<center>
+			<h6>Created by Maciej Jankowski. &copy; {{now}}</h6>
+		</center>
+	</footer>
+</body>
+
 </html>
