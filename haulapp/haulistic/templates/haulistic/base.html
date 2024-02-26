@@ -9,22 +9,21 @@
 <body>
 	<header class="hbar">
 		<a href="{% url 'dashboard' %}"><img src="{% static 'logo.png' %}" alt="HAULISTic logo"></a>
-		<!--[przycisk do strony z logowaniem] -->
-		<a href="{% url 'edit-user' %}" class="nav-link"><span>Edit Account</span></a>
-		<a href="{% url 'logout' %}" class="nav-link"><span>Log-out</span></a>
+		{% comment %} <a href="{% url 'edit-user' %}" class="nav-link"><span>Edit Account</span></a> {% endcomment %}
+		<a href="{% url 'logout' %}" class="nav-link"><span>Log-out</span></a> {{user.id}}
 	</header>
 	<section class="side-pannel">
 		<div class="side-group">
 			<h2>Shopping lists:</h2>
-			<a href="{% url 'all-shopping-lists' %}" class="side-nav"><span>All Shopping Lists</span></a>
-			<a href="{% url 'shopping-list-add' %}" class="side-nav"><span>Add New Shopping List</span></a>
-			<a href="{% url '' %}" class="side-nav"><span>Add An Item To Default List</span></a>
+			<a href="{% url 'all-shopping-lists' %}" class="side-nav"><span>All Shopping Lists</span></a><br>
+			<a href="{% url 'shopping-list-add' %}" class="side-nav"><span>Add New Shopping List</span></a><br>
+			<a href="{% url 'add-item-to-default-shopping-list' %}" class="side-nav"><span>Add An Item To Default Shopping List</span></a><br>
 		</div>
 		<div class="side-group">
 			<h2>To-Do lists:</h2>
-			<a href="{% url 'all-to-do-lists' %}" class="side-nav"><span>All To-Do Lists</span></a>
-			<a href="{% url 'to-do-list-add' %}" class="side-nav"><span>Add New To-Do List</span></a>
-			<a href="{% url '' %}" class="side-nav"><span>Add A Task To Default List</span></a>
+			<a href="{% url 'all-to-do-lists' %}" class="side-nav"><span>All To-Do Lists</span></a><br>
+			<a href="{% url 'to-do-list-add' %}" class="side-nav"><span>Add New To-Do List</span></a><br>
+			<a href="{% url 'add-item-to-default-to-do-list' %}" class="side-nav"><span>Add A Task To Default To-Do List</span></a><br>
 		</div>
 	</section>
 	<section class="canvas">

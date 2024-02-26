@@ -1,10 +1,10 @@
 {% extends 'haulistic/base.html' %}
 {% block content %}
     
-    
-    
-    {{item.list_name}} &nbsp; {{item.list_category}}<br>
-    
-        {{item.element_name}} &nbsp; {{item.element_description}} &nbsp; Amount: {{item.amount}}
+    <h1>"{{list.list_name}}"</h1>
+    <h2>{{list.list_category}}</h2>
+    {% for element in elements %}
+        <p>{{element.element_name}} &nbsp; {{element.element_description}} &nbsp; Amount: {{element.amount}}</p>
+    {% endfor %}
     
 {% endblock %}

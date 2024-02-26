@@ -1,0 +1,18 @@
+{% extends 'haulistic/base.html' %}
+{% block content %}
+    <div class="L-side">
+        <h1>"{{sh_list.list_name}}"</h1>
+        <h2>{{sh_list.list_category}}</h2>
+        {% for sh_element in sh_elements %}
+            <p>{{sh_element.element_name}} &nbsp; {{sh_element.element_description}} &nbsp; Amount: {{sh_element.amount}}</p>
+        {% endfor %}
+    </div>
+    <div class="R-side">
+        <h1>"{{td_list.list_name}}"</h1>
+        <h2>{{td_list.list_category}}</h2>
+        {% for td_element in td_elements %}
+            <p>{{td_element.element_name}} &nbsp; {{td_element.element_description}}</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

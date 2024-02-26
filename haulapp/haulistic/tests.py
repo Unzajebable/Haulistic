@@ -8,8 +8,7 @@ from .models import Shopping_List, List_Element
 #     assert response.status_code == 200
 #     assert response.context["list_name"] == "fake name"
 #     assert response.context["list_category"] == "Fake category"
-#     assert response.context["list_elements"] == "22"
-#     # assert response.context["list_owner"] == 3
+#     assert response.context["list_owner"] == 3
 
 
 @pytest.mark.django_db
@@ -19,8 +18,7 @@ def test_add_list_view(client):
         {
             "list_name": "fake name",
             "list_category": "Fake category",
-            "list_elements": "22",
-            # "list_owner": 3,
+            "list_owner": 3,
         }
     )
     assert response.status_code == 302

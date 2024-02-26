@@ -1,50 +1,35 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate, get_user_model
-
-from .models import Shopping_List, List_Element, To_Do_List, To_Do_Element
-
-
-User = get_user_model()
+from django.contrib.auth import authenticate
+from .models import User, Shopping_List, List_Element, To_Do_List, To_Do_Element
 
 
-class AddUserForm(forms.ModelForm):
-    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
+class AddUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'password', 'password2', 'email']
+        fields = ['username', 'password1', 'password2', 'email', 'pfpurl']
         widgets = {
             "password": forms.PasswordInput,
             'email': forms.EmailInput,
         }
         labels = {
             'username': 'Username',
-            'first_name': 'First Name',
-            'last_name': 'Last Name',
             'password': 'Password',
             'email': 'E-mail address',
+            'pfpurl': 'URL to your profile picture'
         }
 
-    def clean(self):
-        cd = super().clean()
-        pass1 = cd.get('password')
-        pass2 = cd.get('password2')
 
-        if pass2 != pass1:
-            raise ValidationError("Passwords are mismached")
+# class EditUserForm(UserChangeForm):
+#     class Meta:
+#         model = User
+#         fields = []
 
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-        widgets = {
-            'password': forms.PasswordInput
-        }
-        labels = {
-            'username': 'Username',
-            'password': 'Password'
-        }
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -61,6 +46,7 @@ class AddShoppingListForm(forms.ModelForm):
     class Meta:
         model = Shopping_List
         fields = ['list_name', 'list_category']     # dodać pk list ownera jako hidden input
+        # widgets = {'list_owner': forms.HiddenInput}
         labels = {
             'list_name': 'Name of the shopping list',
             'list_category': 'Category of the shopping list (not required)'
@@ -70,8 +56,8 @@ class AddShoppingListForm(forms.ModelForm):
 class AddShoppingListElementForm(forms.ModelForm):
     class Meta:
         model = List_Element
-        fields = ['element_name', 'element_description', 'amount', 'list_pk']
-        widgets = {'list_pk': forms.HiddenInput}
+        fields = ['element_name', 'element_description', 'amount']
+        # widgets = {'list_pk': forms.HiddenInput}
         labels = {
             'element_name': 'Name of the product',
             'element_description': 'Product description, color, link or w/e you desire (not required)',
@@ -82,7 +68,8 @@ class AddShoppingListElementForm(forms.ModelForm):
 class AddToDoListForm(forms.ModelForm):
     class Meta:
         model = To_Do_List
-        fields = ['list_name', 'list_category']     # dodać pk list ownera jako hidden input
+        fields = ['list_name', 'list_category']
+        # widgets = {'list_owner': forms.HiddenInput}
         labels = {
             'list_name': 'Name of the To-Do list',
             'list_category': 'Category of the to do list (not required)'
@@ -92,8 +79,8 @@ class AddToDoListForm(forms.ModelForm):
 class AddToDoElementForm(forms.ModelForm):
     class Meta:
         model = To_Do_Element
-        fields = ['element_name', 'element_description', 'list_pk']
-        widgets = {'list_pk': forms.HiddenInput}
+        fields = ['element_name', 'element_description']
+        # widgets = {'list_pk': forms.HiddenInput}
         labels = {
             'element_name': 'Name of the task',
             'element_description': 'Task description (not required)'

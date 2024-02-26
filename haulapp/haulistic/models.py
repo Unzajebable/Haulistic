@@ -1,25 +1,24 @@
 from django.db import models
-from django.contrib.auth import get_user_model
-#from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
 
-"""
-    jak robisz custom usera bazowanego na tym z django to w admin.py i settings.py
-    odkomentuj User'a i doimportuj ich z modeli i wywal 'User = get_user_model()'
-"""
-# class User(AbstractUser):
-#     pfpurl = models.TextField(default='/static/pfp_default.png')
+class User(AbstractUser):
+    pfpurl = models.TextField(default='/static/pfp_default.png')
+
+
+@receiver(post_save, sender=User)
+def create_default_lists(sender, created, instance, **kwargs):
+    if created:
+        Shopping_List.objects.create(list_name="Default Shopping List", list_owner=instance)
+        To_Do_List.objects.create(list_name="Default To Do List", list_owner=instance)
 
 
 class Shopping_List(models.Model):
     list_name = models.CharField(max_length=32)
     list_category = models.CharField(max_length=32, blank=True)
     list_owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    # list_elements = models.CharField(max_length=254, blank=True)
-    
-    def __str__(self):
-        return self.list_name
 
 
 class List_Element(models.Model):
@@ -34,9 +33,7 @@ class To_Do_List(models.Model):
     list_name = models.CharField(max_length=32)
     list_category = models.CharField(max_length=32, blank=True)
     list_owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.list_name
+
 
 
 class To_Do_Element(models.Model):

@@ -10,8 +10,10 @@
 	<header class="hbar">
 		<a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt="HAULISTic logo"></a>
 		<!--[przycisk do strony z logowaniem] -->
-		<a href="{% url 'login' %}" class="nav-link"><span>Log-in</span></a>
+		<a href="{% url 'login' %}" class="nav-link"><span>Log-in</span></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{% url 'add-user' %}" class="nav-link"><span>Create an account</span></a>
 	</header>
+	{% block content %} {% endblock %}
 	<section class="top-half">
 		<div>
 			<img src="{% static 'dashboard_0.jpg' %}" alt="dashboard screenshot">
@@ -23,11 +25,10 @@
 	</section>
 	<section class="bottom-half">
 		<div>
-			<img src="{{pfpurl}}">
-			<!--		karuzela screenów -->
+			{% comment %} <img src="{{}}">
+			<!--		karuzela screenów --> {% endcomment %}
 		</div>
 	</section>
-	<!--	{% block content %} {% endblock %}	prawdopodobnie niepotrzebne -->
 	<footer>
 		<center>
 			<h6>Created by Maciej Jankowski. &copy; {{now}}</h6>

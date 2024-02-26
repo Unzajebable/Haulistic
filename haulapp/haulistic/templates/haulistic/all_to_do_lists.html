@@ -2,7 +2,7 @@
 {% block content %}
     <ul>
         {% for list in lists %}
-            <li><a href='/list/to-do/{{list.pk}}'>{{list.list_name}}</a> &nbsp; {{list.list_category}}</li>
+            <li><a href='/list/to-do/{{list.pk}}'>{{list.list_name}}</a> &nbsp; {{list.list_category}}&nbsp;&nbsp; <a href='/list/to-do/{{list.pk}}/add-item/'> Add Tasks to this list</a></li>
         {% endfor %}
     </ul>
 

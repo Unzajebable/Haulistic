@@ -7,8 +7,7 @@ def fake_shopping_list():
     return Shopping_List.objects.create(
         list_name = "fake name1",
         list_category = "Fake category1",
-        list_elements = "22",
-        #list_owner = 3,
+        list_owner = 3,
     )
 
 
