@@ -1,0 +1,9 @@
+{% extends 'haulistic/base.html' %}
+{% load static %}
+{% block content %}
+<div class="gform custom-bg-pattern" style="display: flex;justify-content: center;align-items: center; flex-direction: column;margin-top: 100px;border-radius: 5%;padding: 2.5rem;font-weight: 700;box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);max-width: fit-content;margin: 0 auto;">
+	<img src="{% static 'no_access.gif' %}">
+	<p style="padding-bottom: 20px;padding-top: 20px;">You don't have access to view this resource</p>
+	<a href="{% url 'dashboard' %}" class="add-btn">OK go back</a>
+</div>
+{% endblock %}

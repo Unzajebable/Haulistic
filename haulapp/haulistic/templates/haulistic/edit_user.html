@@ -1,0 +1,12 @@
+{% extends 'haulistic/base.html' %}
+{% block content %}
+<div class="eform" style="display: flex;justify-content: center;align-items: center; flex-direction: column;margin-top: 100px;">
+	<form id="e-form" action="" method="post" class="custom-bg-pattern" style="border-radius: 5%;padding: 2.5rem;font-weight: 700;box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);max-width: fit-content;margin: 0 auto;">
+		{% csrf_token %}
+		<p>{{form.username.label}}{{form.username}}</p>
+		<p>{{form.email.label}}{{form.email}}</p>
+		<p>{{form.pfpurl.label}}{{form.pfpurl}}</p>
+		<button type="submit">Confirm</button>
+	</form>
+</div>
+{% endblock %}

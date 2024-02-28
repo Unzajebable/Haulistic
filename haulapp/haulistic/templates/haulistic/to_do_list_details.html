@@ -1,10 +1,24 @@
 {% extends 'haulistic/base.html' %}
 {% block content %}
-    
-<h1>"{{list.list_name}}"</h1>
-<h2>{{list.list_category}}</h2>
-    {% for element in elements %}
-        <p>{{element.element_name}} &nbsp; {{element.element_description}}</p>
-    {% endfor %}
-    
+<div class="generic-table custom-bg-pattern">
+	<table>
+		<caption>
+			"{{list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{list.list_category}}</em>
+		</caption>
+		<thead>
+			<tr>
+				<th>Task Name</th>
+				<th>Task Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for element in elements %}
+			<tr>
+				<td>{{element.element_name}}</td>
+				<td>{{element.element_description}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% endblock %}

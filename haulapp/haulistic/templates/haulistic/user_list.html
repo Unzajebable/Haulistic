@@ -1,9 +1,23 @@
 {% extends 'haulistic/base.html' %}
 {% block content %}
-    <ul>
-        {% for user in users %}
-        <li>{{user.username}} &nbsp;&nbsp;&nbsp; {{user.first_name}} {{user.last_name}}</li>
-        {% endfor %}
-    </ul>
+<div class="generic-table custom-bg-pattern">
+	<table>
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>ID</th>
+				<th>E-mail</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{user.username}}</td>
+				<td>{{user.id}}</td>
+				<td>{{user.email}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% endblock %}
-

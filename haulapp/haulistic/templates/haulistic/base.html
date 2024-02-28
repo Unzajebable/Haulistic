@@ -4,36 +4,56 @@
 
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}HAULISTic Dashboard{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'style_base.css'%}">
+	<link rel="icon" type="image/x-icon" href="{% static 'icon.png' %}">
 </head>
 
-<body>
-	<header class="hbar">
-		<a href="{% url 'dashboard' %}"><img src="{% static 'logo.png' %}" alt="HAULISTic logo"></a>
-		{% comment %} <a href="{% url 'edit-user' %}" class="nav-link"><span>Edit Account</span></a> {% endcomment %}
-		<a href="{% url 'logout' %}" class="nav-link"><span>Log-out</span></a> {{user.id}}
-	</header>
-	<section class="side-pannel">
-		<div class="side-group">
+<body class="custom-pattern">
+	<nav id='menu'>
+		<input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
+		<ul>
+			<li><img src="{{user.pfpurl}}" width="45" height="45" style="display: block;border-radius:25%; margin-bottom: -16px;" /></li>
+			<li><a href='{% url "edit-user" %}'>{{user.username}} &nbsp;&nbsp; Edit Account</a></li>
+			<li><a href='{% url "logout" %}'>Log-Out</a></li>
+		</ul>
+	</nav>
+	<a href="{% url 'dashboard' %}" id="logo"><img src="{% static 'logo.png' %}" alt="HAULISTic logo" width="110" height="50"></a>
+	<div class="wrapper">
+		<div class="sidebar">
 			<h2>Shopping lists:</h2>
-			<a href="{% url 'all-shopping-lists' %}" class="side-nav"><span>All Shopping Lists</span></a><br>
-			<a href="{% url 'shopping-list-add' %}" class="side-nav"><span>Add New Shopping List</span></a><br>
-			<a href="{% url 'add-item-to-default-shopping-list' %}" class="side-nav"><span>Add An Item To Default Shopping List</span></a><br>
-		</div>
-		<div class="side-group">
+			<ul>
+				<li><a href="{% url 'all-shopping-lists' %}" class="side-nav"><span>All Shopping Lists</span></a></li>
+				<li><a href="{% url 'shopping-list-add' %}" class="side-nav"><span>Add New List</span></a></li>
+				<li><a href="{% url 'add-item-to-default-shopping-list' %}" class="side-nav"><span>Add An Item To Default List</span></a></li>
+			</ul>
 			<h2>To-Do lists:</h2>
-			<a href="{% url 'all-to-do-lists' %}" class="side-nav"><span>All To-Do Lists</span></a><br>
-			<a href="{% url 'to-do-list-add' %}" class="side-nav"><span>Add New To-Do List</span></a><br>
-			<a href="{% url 'add-item-to-default-to-do-list' %}" class="side-nav"><span>Add A Task To Default To-Do List</span></a><br>
+			<ul>
+				<li><a href="{% url 'all-to-do-lists' %}" class="side-nav"><span>All To-Do Lists</span></a></li>
+				<li><a href="{% url 'to-do-list-add' %}" class="side-nav"><span>Add New List</span></a></li>
+				<li><a href="{% url 'add-item-to-default-to-do-list' %}" class="side-nav"><span>Add A Task To Default List</span></a></li>
+			</ul>
 		</div>
-	</section>
-	<section class="canvas">
-		{% block content %} {% endblock %}
-	</section>
-	<footer>
-		<center>
-			<h6>Created by Maciej Jankowski. &copy; {{now}}</h6>
-		</center>
-	</footer>
+		<div class="main_content">
+			<div class="header">
+				{% for message in messages %}
+				<center>{{message}}</center>
+				{% endfor %}
+			</div>
+			<div class="canvas">
+				{% block content %} {% endblock %}
+			</div>
+			<footer>
+				<center>
+					<h6>Created by <a href="https://github.com/Unzajebable">Maciej Jankowski</a>. &copy; {{now}}</h6>
+				</center>
+			</footer>
+		</div>
+
+	</div>
+
+	<script href="{% static 'scripts.js'%}"></script>
 </body>
 
 </html>

@@ -1,8 +1,12 @@
 {% extends 'haulistic/index.html' %}
+{%block title%}Log-In{% endblock%}
 {% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
+<form action="" method="post" style="display: flex;justify-content: flex-end;flex-wrap: wrap;column-gap: 20px;padding-right: 20px;padding-top: 1px;padding-bottom: 3px;background-color: #FBB052;">
+	{{message}}
+	{% csrf_token %}
+	{% for f in form %}
+	{{f.label}} {{f}}
+	{% endfor %}
+	<input id="login-btn" type="submit" value="Log-In">
 </form>
 {% endblock %}

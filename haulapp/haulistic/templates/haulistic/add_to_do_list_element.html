@@ -1,8 +1,11 @@
 {% extends 'haulistic/base.html' %}
 {% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
-</form>
+<div class="gform" style="display: flex;justify-content: center;align-items: center; flex-direction: column;margin-top: 100px;">
+	<h1>"<a href="/list/to-do/{{list.id}}" style="text-decoration: none;color: #000">{{list.list_name}}</a>"</h1>
+	<form action="" method="post" id="g-form" class="custom-bg-pattern" style="border-radius: 5%;padding: 2.5rem;font-weight: 700;box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);max-width: fit-content;margin: 0 auto;">
+		{% csrf_token %}
+		{{form.as_p}}
+		<button type="submit">Add Task</button>
+	</form>
+</div>
 {% endblock %}

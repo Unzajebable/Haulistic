@@ -1,18 +1,50 @@
 {% extends 'haulistic/base.html' %}
 {% block content %}
-    <div class="L-side">
-        <h1>"{{sh_list.list_name}}"</h1>
-        <h2>{{sh_list.list_category}}</h2>
-        {% for sh_element in sh_elements %}
-            <p>{{sh_element.element_name}} &nbsp; {{sh_element.element_description}} &nbsp; Amount: {{sh_element.amount}}</p>
-        {% endfor %}
-    </div>
-    <div class="R-side">
-        <h1>"{{td_list.list_name}}"</h1>
-        <h2>{{td_list.list_category}}</h2>
-        {% for td_element in td_elements %}
-            <p>{{td_element.element_name}} &nbsp; {{td_element.element_description}}</p>
-        {% endfor %}
-    </div>
+<div class="dashboard-table">
+	<div class="custom-bg-pattern single">
+		<table style="float: left">
+			<caption>
+				"{{sh_list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{sh_list.list_category}}</em>
+			</caption>
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Product Description</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for sh_element in sh_elements %}
+				<tr>
+					<td>{{sh_element.element_name}}</td>
+					<td>{{sh_element.element_description}}</td>
+					<td>{{sh_element.amount}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="custom-bg-pattern single">
+		<table style="float: right">
+			<caption>
+				"{{td_list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{td_list.list_category}}</em>
+			</caption>
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Product Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for td_element in td_elements %}
+				<tr>
+					<td>{{td_element.element_name}}</td>
+					<td>{{td_element.element_description}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
 
 {% endblock %}

@@ -1,8 +1,42 @@
-{% extends 'haulistic/index.html' %}
-{% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
-</form>
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Create an Account{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'style_index.css'%}">
+	<link rel="icon" type="image/x-icon" href="{% static 'icon.png' %}">
+</head>
+
+<body class="custom-pattern">
+	<nav id='menu'>
+		<input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
+		<ul>
+			<li><a href="{% url 'login' %}">Log-In</a></li>
+			{% comment %} <li><a href="{% url 'add-user' %}">Create an account</a></li> {% endcomment %}
+		</ul>
+	</nav>
+	<a href="{% url 'index' %}" id="logo"><img src="{% static 'logo.png' %}" alt="HAULISTic logo" width="110" height="50"></a>
+	<div style="display: flex;justify-content: center;align-items: center; flex-direction: column;margin-top: 100px;">
+		{% block content %}
+		<form id="r-form" class="custom-bg-pattern" action="" method="post" style="border-radius: 5%;padding: 2rem;font-weight: 700;box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);max-width: fit-content;margin: 0 auto;">
+			{% csrf_token %}
+			{% for f in form %}
+			<p>{{f.label}} {{f}}</p>
+			{% endfor %}
+			<button type="submit">Register</button>
+		</form>
+		{{form.errors}}
+		{% endblock %}
+	</div>
+	<footer class="footer">
+		<center>
+			<h6>Created by Maciej Jankowski. &copy; {{now}}</h6>
+		</center>
+	</footer>
+	<script href="{% static 'scripts.js'%}"></script>
+</body>
+
+</html>

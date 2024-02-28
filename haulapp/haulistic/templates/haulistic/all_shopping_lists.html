@@ -1,9 +1,25 @@
 {% extends 'haulistic/base.html' %}
 {% block content %}
-    <ul>
-        {% for list in lists %}
-            <li><a href='/list/shop/{{list.pk}}'>{{list.list_name}}</a> &nbsp; {{list.list_category}}&nbsp;&nbsp; <a href='/list/shop/{{list.pk}}/add-item/'> Add Items to this list</a></li>
-        {% endfor %}
-    </ul>
+<div class="generic-table custom-bg-pattern">
+	<table>
+		<thead>
+			<tr>
+				<th>Name of the list</th>
+				<th>Category</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for list in lists %}
+			<tr>
+				<td><a href="{% url 'shopping-list-details' list.pk %}">{{list.list_name}}</a></td>
+				<td>{{list.list_category}}</td>
+				<td><a href="{% url 'add-item-to-shopping-list' list.pk %}" class="add-btn">Add Items to this list</a></td>
+				<td><a href="{% url 'shopping-list-edit' list.pk %}" class="edt-btn">Edit list</a></td>
+				<td><a href="{% url 'shopping-list-delete' list.pk %}" class="del-btn">Delete list</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 
 {% endblock %}
