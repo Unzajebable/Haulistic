@@ -3,24 +3,34 @@
 <div class="generic-table custom-bg-pattern">
 	<table>
 		<caption>
-			"{{list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{list.list_category}}</em>
+			"{{list.list_name}}" <br> <em>{{list.list_category}}</em>
 		</caption>
 		<thead>
 			<tr>
 				<th>Product Name</th>
 				<th>Product Description</th>
-				<th>Amount</th>
+				<th style="text-align: center;">Amount</th>
+				<th style="text-align: center;">Bought</th>
 			</tr>
 		</thead>
 		<tbody>
+			{% csrf_token %}
 			{% for element in elements %}
-			<tr>
+			<tr class="{% if element.bought %}strike{% else %}no-strike{% endif %}">
 				<td>{{element.element_name}}</td>
 				<td>{{element.element_description}}</td>
-				<td>{{element.amount}}</td>
+				<td style="text-align: center;">{{element.amount}}</td>
+				<td style="text-align: center;">
+					{% if element.bought %}
+					Yes
+					{% else %}
+					No
+					{% endif %}</td>
+				<td style="text-decoration: none"><a href="/list/shop/{{list.pk}}/{{element.pk}}/" class="edt-btn">Edit</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+
 </div>
 {% endblock %}

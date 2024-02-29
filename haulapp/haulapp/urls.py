@@ -16,6 +16,7 @@ from haulistic.views import (
     DetailShoppingListView,
     EditShoppingListView,
     DeleteShoppingListView,
+    EditShoppingListElementView,
     AddToDefaultShoppingListElementView,
     AllToDoListsView,
     AddToDoListView,
@@ -24,6 +25,7 @@ from haulistic.views import (
     AddToDoElementView,
     DetailToDoListView,
     AddDefaultToDoElementView,
+    EditToDoListElementView
 )
 
 
@@ -42,6 +44,7 @@ urlpatterns = [
     path('list/shop/<int:list_pk>/edit/', login_required(EditShoppingListView), name='shopping-list-edit'),
     path('list/shop/<int:list_pk>/delete/', login_required(DeleteShoppingListView), name='shopping-list-delete'),
     path('list/shop/<int:list_pk>/add-item/', login_required(AddShoppingListElementView), name='add-item-to-shopping-list'),
+    path('list/shop/<int:list_pk>/<int:element_pk>/', login_required(EditShoppingListElementView), name='edit-shopping-list-element'),
     path('list/shop/default/add-item/', login_required(AddToDefaultShoppingListElementView), name='add-item-to-default-shopping-list'),
     path('list/to-do/all/', login_required(AllToDoListsView.as_view()), name='all-to-do-lists'),
     path('list/to-do/add/', login_required(AddToDoListView), name='to-do-list-add'),
@@ -49,6 +52,7 @@ urlpatterns = [
     path('list/to-do/<int:list_pk>/edit/', login_required(EditToDoListView), name='to-do-list-edit'),
     path('list/to-do/<int:list_pk>/delete/', login_required(DeleteToDoListView), name='to-do-list-delete'),
     path('list/to-do/<int:list_pk>/add-item/', login_required(AddToDoElementView), name='add-item-to-to-do-list'),
+    path('list/to-do/<int:list_pk>/<int:element_pk>/', login_required(EditToDoListElementView), name='edit-to-do-list-element'),
     path('list/to-do/default/add-item/', login_required(AddDefaultToDoElementView), name='add-item-to-default-to-do-list'),
 ]
 

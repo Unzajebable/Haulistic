@@ -13,8 +13,10 @@ from .forms import (
     EditUserForm,
     AddShoppingListForm,
     AddShoppingListElementForm,
+    EditShoppingListElement,
     AddToDoListForm,
     AddToDoElementForm,
+    EditToDoElementForm,
 )
 
 
@@ -71,6 +73,7 @@ class UserListView(ListView):
     model = User
     extra_context = {'now': datetime.now().year}
     context_object_name = "users"
+    ordering = ['pk']
 
 
 class LoginView(FormView):
@@ -168,7 +171,7 @@ class DetailShoppingListView(View):
     def get(self, request, *args, **kwargs):
         list_pk = kwargs['list_pk']
         chosen_list = get_object_or_404(Shopping_List, pk=list_pk)
-        list_elements = List_Element.objects.all().filter(list_pk=list_pk)
+        list_elements = List_Element.objects.all().filter(list_pk=list_pk).order_by('bought')
         if request.user == chosen_list.list_owner:
             context = {
                 "list":chosen_list,
@@ -238,7 +241,6 @@ def AddShoppingListElementView(request, *args, **kwargs):
     """
     active_list = Shopping_List.objects.get(pk=kwargs['list_pk'])
     form = AddShoppingListElementForm()
-    # success = False
     if request.user == active_list.list_owner:
         if request.method == 'POST':
             form = AddShoppingListElementForm(request.POST)
@@ -249,7 +251,6 @@ def AddShoppingListElementView(request, *args, **kwargs):
                 element_name_msg = form.cleaned_data.get('element_name')
                 messages.success(request, 'Successfully added new product "' + element_name_msg +'" to the list.')
                 form = AddShoppingListElementForm()
-                # success = True
         
         context = {
             'form': form,
@@ -259,7 +260,34 @@ def AddShoppingListElementView(request, *args, **kwargs):
         return render(request, 'haulistic/add_shopping_list_element.html', context)
     else:
         return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})
-    
+
+
+def EditShoppingListElementView(request, list_pk, element_pk):
+    """
+    A view that lets the owner of the list modify the elements of the list (as the ID of the list
+    is shown in the url there's a special if statement to check if the logged-in user is the owner of the selected list)
+    """
+    sh_list = Shopping_List.objects.get(id=list_pk)
+    sh_element = get_object_or_404(List_Element, pk=element_pk)
+    form = EditShoppingListElement(instance=sh_element)
+    if request.user == sh_list.list_owner:
+        if request.method == 'POST':
+            form = EditShoppingListElement(request.POST, instance=sh_element)
+            if form.is_valid():
+                form.save()
+                element_name_msg = form.cleaned_data.get('element_name')
+                messages.success(request, 'Successfully modified element "' + element_name_msg +'"!')
+                return redirect(f'/list/shop/{list_pk}/')
+        
+        context = {
+            'list': sh_list,
+            'form': form,
+            'now': datetime.now().year,
+        }
+        return render(request, 'haulistic/add_shopping_list_element.html', context)
+    else:
+        return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})
+
 
 def AddToDefaultShoppingListElementView(request, *args, **kwargs):
     """
@@ -269,7 +297,6 @@ def AddToDefaultShoppingListElementView(request, *args, **kwargs):
     logged_user_id = request.user.id
     default_sh_list = Shopping_List.objects.all().filter(list_owner=logged_user_id)[0]
     form = AddShoppingListElementForm()
-    # success = False
     
     if request.method == 'POST':
         form = AddShoppingListElementForm(request.POST)
@@ -280,7 +307,6 @@ def AddToDefaultShoppingListElementView(request, *args, **kwargs):
             element_name_msg = form.cleaned_data.get('element_name')
             messages.success(request, 'Successfully added new product "' + element_name_msg +'" to the list.')
             form = AddShoppingListElementForm()
-            # success = True
     
     context = {
         'form': form,
@@ -337,7 +363,7 @@ class DetailToDoListView(View):
     def get(self, request, *args, **kwargs):
         list_pk = kwargs['list_pk']
         chosen_list = get_object_or_404(To_Do_List, pk=list_pk)
-        list_elements = To_Do_Element.objects.all().filter(list_pk=list_pk)
+        list_elements = To_Do_Element.objects.all().filter(list_pk=list_pk).order_by('completed')
         if request.user == chosen_list.list_owner:
             context = {
                 "list":chosen_list,
@@ -407,7 +433,6 @@ def AddToDoElementView(request, *args, **kwargs):
     """
     active_list = To_Do_List.objects.get(pk=kwargs['list_pk'])
     form = AddToDoElementForm()
-    # success = False
     if request.user == active_list.list_owner:
         if request.method == 'POST':
             form = AddToDoElementForm(request.POST)
@@ -418,12 +443,38 @@ def AddToDoElementView(request, *args, **kwargs):
                 element_name_msg = form.cleaned_data.get('element_name')
                 messages.success(request, 'Successfully added new task "' + element_name_msg + '" to the list.')
                 form = AddToDoElementForm()
-                # success = True
         
         context = {
             'form': form,
             'now': datetime.now().year,
             'list': active_list,
+        }
+        return render(request, 'haulistic/add_to_do_list_element.html', context)
+    else:
+        return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})
+
+
+def EditToDoListElementView(request, list_pk, element_pk):
+    """
+    A view that lets the owner of the list modify the elements of the list (as the ID of the list
+    is shown in the url there's a special if statement to check if the logged-in user is the owner of the selected list)
+    """
+    td_list = To_Do_List.objects.get(id=list_pk)
+    td_element = get_object_or_404(To_Do_Element, pk=element_pk)
+    form = EditToDoElementForm(instance=td_element)
+    if request.user == td_list.list_owner:
+        if request.method == 'POST':
+            form = EditToDoElementForm(request.POST, instance=td_element)
+            if form.is_valid():
+                form.save()
+                element_name_msg = form.cleaned_data.get('element_name')
+                messages.success(request, 'Successfully modified element "' + element_name_msg +'"!')
+                return redirect(f'/list/to-do/{list_pk}/')
+        
+        context = {
+            'list': td_list,
+            'form': form,
+            'now': datetime.now().year,
         }
         return render(request, 'haulistic/add_to_do_list_element.html', context)
     else:
@@ -438,7 +489,6 @@ def AddDefaultToDoElementView(request, *args, **kwargs):
     logged_user_id = request.user.id
     default_td_list = To_Do_List.objects.all().filter(list_owner=logged_user_id)[0]
     form = AddToDoElementForm()
-    # success = False
     
     if request.method == 'POST':
         form = AddToDoElementForm(request.POST)
@@ -449,7 +499,6 @@ def AddDefaultToDoElementView(request, *args, **kwargs):
             element_name_msg = form.cleaned_data.get('element_name')
             messages.success(request, 'Successfully added new task "' + element_name_msg + '" to the list.')
             form = AddToDoElementForm()
-            # success = True
     
     context = {
         'form': form,

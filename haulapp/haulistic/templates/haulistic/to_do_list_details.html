@@ -3,19 +3,27 @@
 <div class="generic-table custom-bg-pattern">
 	<table>
 		<caption>
-			"{{list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{list.list_category}}</em>
+			"{{list.list_name}}" <br> <em>{{list.list_category}}</em>
 		</caption>
 		<thead>
 			<tr>
 				<th>Task Name</th>
 				<th>Task Description</th>
+				<th style="text-align: center;">Done</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for element in elements %}
-			<tr>
+			<tr class="{% if element.completed %}strike{% else %}no-strike{% endif %}">
 				<td>{{element.element_name}}</td>
 				<td>{{element.element_description}}</td>
+				<td style="text-align: center;">
+					{% if element.completed %}
+					Yes
+					{% else %}
+					No
+					{% endif %}</td>
+				<td style="background-color: rgba(255, 255, 255, 0); text-decoration: none;"><a href="/list/to-do/{{list.pk}}/{{element.pk}}/" class="edt-btn">Edit</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>

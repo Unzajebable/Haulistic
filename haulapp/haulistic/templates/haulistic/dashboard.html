@@ -4,21 +4,29 @@
 	<div class="custom-bg-pattern single">
 		<table style="float: left">
 			<caption>
-				"{{sh_list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{sh_list.list_category}}</em>
+				<a href="/list/shop/{{sh_list.id}}" style="text-decoration: none;color: #000">"{{sh_list.list_name}}" <br> <em>{{sh_list.list_category}}</em></a>
 			</caption>
 			<thead>
 				<tr>
 					<th>Product Name</th>
 					<th>Product Description</th>
-					<th>Amount</th>
+					<th style="text-align: center;">Amount</th>
+					<th style="text-align: center;">Bought</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for sh_element in sh_elements %}
-				<tr>
+				<tr class="{% if sh_element.bought %}strike{% else %}no-strike{% endif %}">
 					<td>{{sh_element.element_name}}</td>
 					<td>{{sh_element.element_description}}</td>
-					<td>{{sh_element.amount}}</td>
+					<td style="text-align: center;">{{sh_element.amount}}</td>
+					<td style="text-align: center;">
+						{% if sh_element.bought %}
+						Yes
+						{% else %}
+						No
+						{% endif %}</td>
+					<td style="text-decoration: none"><a href="/list/shop/{{sh_list.pk}}/{{sh_element.pk}}/" class="edt-btn">Edit</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -27,12 +35,13 @@
 	<div class="custom-bg-pattern single">
 		<table style="float: right">
 			<caption>
-				"{{td_list.list_name}}" &nbsp;&nbsp;&nbsp;&nbsp; <em>{{td_list.list_category}}</em>
+				<a href="/list/to-do/{{td_list.id}}" style="text-decoration: none;color: #000">"{{td_list.list_name}}" <br> <em>{{td_list.list_category}}</em></a>
 			</caption>
 			<thead>
-				<tr>
+				<tr class="{% if td_element.completed %}strike{% else %}no-strike{% endif %}">
 					<th>Product Name</th>
 					<th>Product Description</th>
+					<th style="text-align: center;">Done</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,6 +49,13 @@
 				<tr>
 					<td>{{td_element.element_name}}</td>
 					<td>{{td_element.element_description}}</td>
+					<td style="text-align: center;">
+						{% if td_element.completed %}
+						Yes
+						{% else %}
+						No
+						{% endif %}</td>
+					<td style="background-color: rgba(255, 255, 255, 0); text-decoration: none;"><a href="/list/to-do/{{td_list.pk}}/{{td_element.pk}}/" class="edt-btn">Edit</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>

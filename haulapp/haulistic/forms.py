@@ -91,3 +91,28 @@ class AddToDoElementForm(forms.ModelForm):
             'element_name': 'Name of the task',
             'element_description': 'Task description (not required)'
         }
+
+
+class EditShoppingListElement(forms.ModelForm):
+    class Meta:
+        model = List_Element
+        fields = ['element_name', 'element_description', 'amount', 'bought']
+        widgets = {'bought': forms.CheckboxInput}
+        {
+            'element_name': 'Name of the product',
+            'element_description': 'Product description, color, link or w/e you desire (not required)',
+            'amount': 'Amount of products to buy',
+            'bought': 'Bought'
+        }
+
+
+class EditToDoElementForm(forms.ModelForm):
+    class Meta:
+        model = To_Do_Element
+        fields = ['element_name', 'element_description', 'completed']
+        widgets = {'completed': forms.CheckboxInput}
+        labels = {
+            'element_name': 'Name of the task',
+            'element_description': 'Task description (not required)',
+            'completed': 'Done',
+        }

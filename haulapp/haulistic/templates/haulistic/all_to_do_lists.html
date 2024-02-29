@@ -14,7 +14,7 @@
 				<td><a href="{% url 'to-do-list-details' list.pk %}">{{list.list_name}}</a></td>
 				<td>{{list.list_category}}</td>
 				<td><a href="{% url 'add-item-to-to-do-list' list.pk %}" class="add-btn">Add Tasks to this list</a></td>
-				<td><a href="{% url 'to-do-list-edit' list.pk %}" class="edt-btn">Edit list</a></td>
+				<td style="background-color: rgba(255, 255, 255, 0);"><a href="{% url 'to-do-list-edit' list.pk %}" class="edt-btn">Edit list</a></td>
 				<td><a href="{% url 'to-do-list-delete' list.pk %}" class="del-btn">Delete list</a></td>
 			</tr>
 			{% endfor %}

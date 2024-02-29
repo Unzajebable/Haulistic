@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     pfpurl = models.TextField(default='/static/pfp_default.png')
+    
 
 
 @receiver(post_save, sender=User)   # creates default shopping & to-do lists for every new account
@@ -19,6 +20,9 @@ class Shopping_List(models.Model):
     list_name = models.CharField(max_length=132)
     list_category = models.CharField(max_length=132, blank=True)
     list_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.list_name
 
 
 class List_Element(models.Model):
@@ -27,12 +31,18 @@ class List_Element(models.Model):
     element_description = models.TextField(blank=True)
     amount = models.PositiveIntegerField(default=1)
     bought = models.BooleanField(default=0)
+    
+    def __str__(self):
+        return self.element_name
 
 
 class To_Do_List(models.Model):
     list_name = models.CharField(max_length=132)
     list_category = models.CharField(max_length=132, blank=True)
     list_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.list_name
 
 
 class To_Do_Element(models.Model):
@@ -40,4 +50,7 @@ class To_Do_Element(models.Model):
     element_name = models.CharField(max_length=132)
     element_description = models.TextField(blank=True)
     completed = models.BooleanField(default=0)
+    
+    def __str__(self):
+        return self.element_name
 
