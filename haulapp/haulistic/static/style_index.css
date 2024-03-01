@@ -321,6 +321,10 @@ h6 {
 	font-weight: 500;
 }
 
+#content p {
+	font-size: 1.3em
+}
+
 #leftcolumn {
 	float: left;
 	width: 40vw;
