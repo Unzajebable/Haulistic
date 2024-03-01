@@ -150,7 +150,7 @@ def AddShoppingListView(request, *args, **kwargs):
         form = AddShoppingListForm(request.POST)
         if form.is_valid():
             new_list = form.save(commit=False)
-            new_list.list_owner = logged_user
+            new_list.list_owner = logged_user   # assigning the created list to the logged user
             new_list.save()
             list_name_msg = form.cleaned_data.get('list_name')
             messages.success(request, 'Successfully added new list "' + list_name_msg +'"!')
@@ -172,15 +172,15 @@ class DetailShoppingListView(View):
         list_pk = kwargs['list_pk']
         chosen_list = get_object_or_404(Shopping_List, pk=list_pk)
         list_elements = List_Element.objects.all().filter(list_pk=list_pk).order_by('bought')
-        if request.user == chosen_list.list_owner:
+        if request.user == chosen_list.list_owner:      # checking if the logged user is the owner of the list
             context = {
-                "list":chosen_list,
-                "elements":list_elements,
+                "list": chosen_list,
+                "elements": list_elements,
                 'now': datetime.now().year,
             }
             return render(request, 'haulistic/shopping_list_details.html', context)
         else:
-            return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})
+            return render(request, 'haulistic/no_access.html', {'now': datetime.now().year, 'access': 'no_access'})
 
 
 def EditShoppingListView(request, list_pk):
@@ -190,7 +190,7 @@ def EditShoppingListView(request, list_pk):
     """
     sh_list = Shopping_List.objects.get(id=list_pk)
     form = AddShoppingListForm(instance=sh_list)
-    if request.user == sh_list.list_owner:
+    if request.user == sh_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             form = AddShoppingListForm(request.POST, instance=sh_list)
             if form.is_valid():
@@ -205,7 +205,7 @@ def EditShoppingListView(request, list_pk):
         }
         return render(request, 'haulistic/add_shopping_list.html', context)
     else:
-        return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})
+        return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})    # if not user sees this page
 
 
 def DeleteShoppingListView(request, list_pk):
@@ -216,11 +216,11 @@ def DeleteShoppingListView(request, list_pk):
     sh_list = Shopping_List.objects.get(id=list_pk)
     logged_user_id = request.user.id
     default_sh_list = Shopping_List.objects.all().filter(list_owner=logged_user_id)[0]
-    if request.user == sh_list.list_owner:
+    if request.user == sh_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
-            if default_sh_list.pk == list_pk:
+            if default_sh_list.pk == list_pk:   # cheking if the list is the default one that can't be deleted
                 context = {'now': datetime.now().year, 'list': default_sh_list}
-                return render(request, 'haulistic/big_no_no.html', context)
+                return render(request, 'haulistic/big_no_no.html', context)     # if it's the default render this page
             else:
                 sh_list.delete()
                 messages.success(request, "List deleted.")
@@ -231,7 +231,7 @@ def DeleteShoppingListView(request, list_pk):
         }
         return render(request, 'haulistic/delete.html', context)
     else:
-        return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})
+        return render(request, 'haulistic/no_access.html', {'now': datetime.now().year})    # if not user sees this page
 
 
 def AddShoppingListElementView(request, *args, **kwargs):
@@ -241,7 +241,7 @@ def AddShoppingListElementView(request, *args, **kwargs):
     """
     active_list = Shopping_List.objects.get(pk=kwargs['list_pk'])
     form = AddShoppingListElementForm()
-    if request.user == active_list.list_owner:
+    if request.user == active_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             form = AddShoppingListElementForm(request.POST)
             if form.is_valid():
@@ -270,7 +270,7 @@ def EditShoppingListElementView(request, list_pk, element_pk):
     sh_list = Shopping_List.objects.get(id=list_pk)
     sh_element = get_object_or_404(List_Element, pk=element_pk)
     form = EditShoppingListElement(instance=sh_element)
-    if request.user == sh_list.list_owner:
+    if request.user == sh_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             form = EditShoppingListElement(request.POST, instance=sh_element)
             if form.is_valid():
@@ -342,7 +342,7 @@ def AddToDoListView(request, *args, **kwargs):
         form = AddToDoListForm(request.POST)
         if form.is_valid():
             new_list = form.save(commit=False)
-            new_list.list_owner = logged_user
+            new_list.list_owner = logged_user   # assigning the created list to the logged user
             new_list.save()
             list_name_msg = form.cleaned_data.get('list_name')
             messages.success(request, 'Successfully added new list "' + list_name_msg +'"!')
@@ -364,7 +364,7 @@ class DetailToDoListView(View):
         list_pk = kwargs['list_pk']
         chosen_list = get_object_or_404(To_Do_List, pk=list_pk)
         list_elements = To_Do_Element.objects.all().filter(list_pk=list_pk).order_by('completed')
-        if request.user == chosen_list.list_owner:
+        if request.user == chosen_list.list_owner:        # checking if the logged user is the owner of the list
             context = {
                 "list":chosen_list,
                 "elements":list_elements,
@@ -382,7 +382,7 @@ def EditToDoListView(request, list_pk):
     """
     td_list = To_Do_List.objects.get(id=list_pk)
     form = AddToDoListForm(instance=td_list)
-    if request.user == td_list.list_owner:
+    if request.user == td_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             form = AddToDoListForm(request.POST, instance=td_list)
             if form.is_valid():
@@ -408,7 +408,7 @@ def DeleteToDoListView(request, list_pk):
     logged_user_id = request.user.id
     default_td_list = To_Do_List.objects.all().filter(list_owner=logged_user_id)[0]
     td_list = To_Do_List.objects.get(id=list_pk)
-    if request.user == td_list.list_owner:
+    if request.user == td_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             if default_td_list.pk == list_pk:
                 context = {'now': datetime.now().year, 'list': default_td_list}
@@ -433,7 +433,7 @@ def AddToDoElementView(request, *args, **kwargs):
     """
     active_list = To_Do_List.objects.get(pk=kwargs['list_pk'])
     form = AddToDoElementForm()
-    if request.user == active_list.list_owner:
+    if request.user == active_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             form = AddToDoElementForm(request.POST)
             if form.is_valid():
@@ -462,7 +462,7 @@ def EditToDoListElementView(request, list_pk, element_pk):
     td_list = To_Do_List.objects.get(id=list_pk)
     td_element = get_object_or_404(To_Do_Element, pk=element_pk)
     form = EditToDoElementForm(instance=td_element)
-    if request.user == td_list.list_owner:
+    if request.user == td_list.list_owner:      # checking if the logged user is the owner of the list
         if request.method == 'POST':
             form = EditToDoElementForm(request.POST, instance=td_element)
             if form.is_valid():

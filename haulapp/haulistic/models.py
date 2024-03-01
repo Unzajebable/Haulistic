@@ -9,7 +9,7 @@ class User(AbstractUser):
     
 
 
-@receiver(post_save, sender=User)   # creates default shopping & to-do lists for every new account
+@receiver(post_save, sender=User)  
 def create_default_lists(sender, created, instance, **kwargs):
     if created:
         Shopping_List.objects.create(list_name="Default Shopping List", list_category="Quick access list" ,list_owner=instance)
