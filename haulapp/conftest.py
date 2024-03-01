@@ -37,17 +37,6 @@ def fake_shopping_list(db):
 
 
 @pytest.fixture
-def fake_shopping_list_staff(db):
-    owner = User.objects.get(username="fake_staff")
-    flist = Shopping_List.objects.create(
-        list_name = "fake name1 shopping",
-        list_category = "fake category1",
-        list_owner = owner
-    )
-    return flist
-
-
-@pytest.fixture
 def fake_shopping_list2(db):
     owner = User.objects.get(username="fake_user")
     flist = Shopping_List.objects.create(
@@ -69,7 +58,7 @@ def fake_list_elements(db):
         bought = 1
     )
     List_Element.objects.create(
-        list_pk = flist,   #możliwe że fake_shopping_list.pk we'll see (prawdopodobnie nie)
+        list_pk = flist,
         element_name = "nazwa2",
         element_description= "desc2",
         amount= 4,
