@@ -98,7 +98,7 @@ class EditShoppingListElement(forms.ModelForm):
         model = List_Element
         fields = ['element_name', 'element_description', 'amount', 'bought']
         widgets = {'bought': forms.CheckboxInput}
-        {
+        labels = {
             'element_name': 'Name of the product',
             'element_description': 'Product description, color, link or w/e you desire (not required)',
             'amount': 'Amount of products to buy',
